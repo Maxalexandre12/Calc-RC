@@ -27,9 +27,10 @@ class Cliente{
             String opcao;
             opcao = JOptionPane.showInputDialog(null,"Digite o operador que deseja usar:\n [1] - Adicao\n [2] - Subtracao\n [3] - Multiplicacao\n [4] - Divisao\n [5] - Raiz quadrada\n [6] - Seno\n [7] - Cosseno\n [0] - Sair");
             
-            if(opcao == null ){ // opcao == "" tentar fazer hoje
+            if(opcao == null){ 
                 s.close();
                 JOptionPane.showMessageDialog(null, "Conexão cancelada!");
+                System.out.println("Conexão cancelada!");
                 break;
             }
 
@@ -56,8 +57,8 @@ class Cliente{
                     sOut = new DataOutputStream(s.getOutputStream());
                     sOut.writeDouble(n1);
                     break;
-
-            }
+                }
+                
             resultado = sIn.readUTF();
             System.out.println("\nResultado da " + resultado);
         }
