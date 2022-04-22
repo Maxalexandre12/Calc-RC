@@ -66,7 +66,7 @@ public class ServidorThread extends Thread {
                         break;
     
                     case 6:
-                        radiano = Math.toRadians(n1); //n1 é o valor em graus
+                        radiano = Math.toRadians(n1); 
                         seno = Math.sin(radiano);
                         s1out.writeUTF("Seno de: " + n1 + " = " + seno);
                         break;
