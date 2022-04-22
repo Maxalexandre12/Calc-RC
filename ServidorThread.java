@@ -22,7 +22,8 @@ public class ServidorThread extends Thread {
         try {
                 s1out = new DataOutputStream(s1.getOutputStream());
                 s1In = new DataInputStream(s1.getInputStream());
-            do {
+           
+                do {
 
                 opcao = s1In.readInt();
                 
@@ -32,6 +33,7 @@ public class ServidorThread extends Thread {
                 }else if(opcao >= 5){
                     n1 = s1In.readDouble();
                 }
+                
                 switch(opcao){
                     case 1:
                         soma = n1 + n2;
