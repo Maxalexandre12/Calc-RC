@@ -4,7 +4,7 @@ import javax.swing.JOptionPane;
 
 class Cliente{
     public static void main( String args[] ) throws IOException {
-        int porta,  operador; 
+        int porta, operador; 
         double n1, n2;
         String ip, opcao, resultado;
         Socket socket;
@@ -23,7 +23,7 @@ class Cliente{
             socketOutput = new DataOutputStream(socket.getOutputStream());
             
         while(true){
-                  
+
             opcao = JOptionPane.showInputDialog(null, "Digite o operador que deseja usar:\n" + 
             "[1] - Adicao\n" + 
             "[2] - Subtracao\n" + 
