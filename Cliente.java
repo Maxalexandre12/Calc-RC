@@ -9,8 +9,8 @@ class Cliente{
         double n1, n2;
         String ip, resultado;
         Socket s;
-        DataInputStream sIn;
-        DataOutputStream sOut;
+        DataInputStream socketInput;
+        DataOutputStream socketOutput;
     
         try {
             
@@ -20,46 +20,59 @@ class Cliente{
             InetSocketAddress endereco = new InetSocketAddress(ip, porta);
             s.connect(endereco,1000);  
             
-            sIn = new DataInputStream(s.getInputStream());
-            sOut = new DataOutputStream(s.getOutputStream());
+            socketInput = new DataInputStream(s.getInputStream());
+            socketOutput = new DataOutputStream(s.getOutputStream());
             
         while(true){
             String opcao;
-            opcao = JOptionPane.showInputDialog(null,"Digite o operador que deseja usar:\n [1] - Adicao\n [2] - Subtracao\n [3] - Multiplicacao\n [4] - Divisao\n [5] - Raiz quadrada\n [6] - Seno\n [7] - Cosseno\n [0] - Sair");
             
-            if(opcao == null){ 
-                s.close();
+            opcao = JOptionPane.showInputDialog(null, "Digite o operador que deseja usar:\n" + 
+            "[1] - Adicao\n" + 
+            "[2] - Subtracao\n" + 
+            "[3] - Multiplicacao\n" + 
+            "[4] - Divisao\n" + 
+            "[5] - Raiz quadrada\n" + 
+            "[6] - Seno\n" + 
+            "[7] - Cosseno\n" + 
+            "[0] - Sair");
+            
+            if(opcao == null || Integer.parseInt(opcao) == JOptionPane.CLOSED_OPTION){ 
                 JOptionPane.showMessageDialog(null, "Conexão cancelada!");
                 System.out.println("Conexão cancelada!");
+                s.close();
                 break;
             }
-
+            
            operador = Integer.parseInt(opcao);
-           sOut.writeInt(operador);
+           socketOutput.writeInt(operador);
 
-            if(operador	== 0 || operador > 7 ){
+            if(operador	== 0){
                 s.close();
                 System.out.println("Conexão encerrada");
+                break;
+            }else if(operador > 7){
+                s.close();
+                System.out.println("Operação invalida! Encerrando conexão...");
                 break;
             }
             
             switch(operador){
                 case 1: case 2: case 3: case 4:
                     n1 = Double.parseDouble(JOptionPane.showInputDialog(null,"Informe o primeiro valor: "));
-                    sOut.writeDouble(n1); 
+                    socketOutput.writeDouble(n1); 
                     
                     n2 = Double.parseDouble(JOptionPane.showInputDialog(null,"Informe o segundo valor: "));
-                    sOut.writeDouble(n2);
+                    socketOutput.writeDouble(n2);
                     break;
                 
                 case 5: case 6: case 7:
                     n1 = Double.parseDouble(JOptionPane.showInputDialog(null,"Informe um valor: "));
-                    sOut = new DataOutputStream(s.getOutputStream());
-                    sOut.writeDouble(n1);
+                    socketOutput = new DataOutputStream(s.getOutputStream());
+                    socketOutput.writeDouble(n1);
                     break;
                 }
                 
-            resultado = sIn.readUTF();
+            resultado = socketInput.readUTF();
             System.out.println("\nResultado da " + resultado);
         }
     }catch(NumberFormatException e) {

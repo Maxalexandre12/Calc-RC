@@ -1,6 +1,5 @@
 import java.net.*;
 import java.io.*;
-import java.lang.Math;
 
 public class ServidorThread extends Thread {
     
@@ -8,8 +7,8 @@ public class ServidorThread extends Thread {
         int opcao;
         double n1, n2, radiano;
         double soma, subtracao, multiplicacao, divisao, raiz, seno, cosseno;
-        DataOutputStream s1out;
-        DataInputStream s1In;
+        DataInputStream socketInput1;
+        DataOutputStream socketOutput1;
 
     public ServidorThread(Socket s1) {
         super();
@@ -20,62 +19,65 @@ public class ServidorThread extends Thread {
     public void run() {
         
         try {
-                s1out = new DataOutputStream(s1.getOutputStream());
-                s1In = new DataInputStream(s1.getInputStream());
+                socketOutput1 = new DataOutputStream(s1.getOutputStream());
+                socketInput1 = new DataInputStream(s1.getInputStream());
            
                 do {
 
-                opcao = s1In.readInt();
+                opcao = socketInput1.readInt();
                 
                 if(opcao >= 1 && opcao <= 4){
-                    n1 = s1In.readDouble();
-                    n2 = s1In.readDouble();
+                    n1 = socketInput1.readDouble();
+                    n2 = socketInput1.readDouble();
                 }else if(opcao >= 5){
-                    n1 = s1In.readDouble();
+                    n1 = socketInput1.readDouble();
                 }
                 
                 switch(opcao){
                     case 1:
                         soma = n1 + n2;
-                        s1out.writeUTF("Soma: " + soma);
+                        socketOutput1.writeUTF("Soma: " + soma);
                         break;
                        
                     case 2:
                         subtracao = n1 - n2;
-                        s1out.writeUTF("Subtracao: " + subtracao);
+                        socketOutput1.writeUTF("Subtracao: " + subtracao);
                         break;
                        
                     case 3:
                         multiplicacao = n1 * n2;
-                        s1out.writeUTF("Multiplicacao: " + multiplicacao);
+                        socketOutput1.writeUTF("Multiplicacao: " + multiplicacao);
                         break;
                        
                     case 4:
                         divisao = n1 / n2;
                         if(n1 == 0){
-                            s1out.writeUTF("Impossivel de realizar o calculo");
+                            socketOutput1.writeUTF("Impossivel de realizar o calculo");
                             break;
                         }else{
-                            s1out.writeUTF("Divisao: " + divisao);
+                            socketOutput1.writeUTF("Divisao: " + divisao);
                             break;
                         }
 
                     case 5:
                         raiz = Math.sqrt(n1);
-                        s1out.writeUTF("Raiz quadrada de: " + n1 + " = " + raiz);
+                        socketOutput1.writeUTF("Raiz quadrada de: " + n1 + " = " + raiz);
                         break;
     
                     case 6:
                         radiano = Math.toRadians(n1); 
                         seno = Math.sin(radiano);
-                        s1out.writeUTF("Seno de: " + n1 + " = " + seno);
+                        socketOutput1.writeUTF("Seno de: " + n1 + " = " + seno);
                         break;
     
                     case 7:
                         radiano = Math.toRadians(n1); //n1 é o valor em graus
                         cosseno = Math.cos(radiano);
-                        s1out.writeUTF("Cosseno de: " + n1 + " = " + cosseno);
+                        socketOutput1.writeUTF("Cosseno de: " + n1 + " = " + cosseno);
                         break;
+                    
+                    default:
+                        System.out.println("Operação invalida");
                 }
 
             }while(opcao != 0);
