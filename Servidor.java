@@ -2,8 +2,10 @@ import java.net.*;
 import java.io.*;
 
 class Servidor {
-    public static void main( String args[] ) throws IOException{ 
-        ServerSocket s = (ServerSocket)null;
+    private static ServerSocket s;
+
+    public static void main( String args[] ){ 
+        s = (ServerSocket)null;
         Socket s1;
         int porta = 0;
 
@@ -23,7 +25,6 @@ class Servidor {
                 serviceThread.start();
             }
             catch(IOException e){
-                s.close();
                 System.out.println( e );
             }
         }

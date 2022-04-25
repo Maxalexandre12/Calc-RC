@@ -77,7 +77,7 @@ public class ServidorThread extends Thread {
                         break;
                     
                     case 0:
-                        System.out.println("Conexão encerrada!");
+                        System.out.println("Conexão com o cliente encerrada!");
                         s1.close();
                         break;
                 }
