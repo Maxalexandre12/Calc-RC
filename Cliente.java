@@ -2,30 +2,28 @@ import java.net.*;
 import java.io.*;
 import javax.swing.JOptionPane;
 
-
 class Cliente{
     public static void main( String args[] ) throws IOException {
         int porta,  operador; 
         double n1, n2;
-        String ip, resultado;
-        Socket s;
+        String ip, opcao, resultado;
+        Socket socket;
         DataInputStream socketInput;
         DataOutputStream socketOutput;
     
         try {
             
-            s = new Socket();
+            socket = new Socket();
             ip = JOptionPane.showInputDialog("Digite o ip: ");
             porta = Integer.parseInt(JOptionPane.showInputDialog("Digite a porta: "));
             InetSocketAddress endereco = new InetSocketAddress(ip, porta);
-            s.connect(endereco,1000);  
+            socket.connect(endereco,1000);  
             
-            socketInput = new DataInputStream(s.getInputStream());
-            socketOutput = new DataOutputStream(s.getOutputStream());
+            socketInput = new DataInputStream(socket.getInputStream());
+            socketOutput = new DataOutputStream(socket.getOutputStream());
             
         while(true){
-            String opcao;
-            
+                  
             opcao = JOptionPane.showInputDialog(null, "Digite o operador que deseja usar:\n" + 
             "[1] - Adicao\n" + 
             "[2] - Subtracao\n" + 
@@ -39,7 +37,7 @@ class Cliente{
             if(opcao == null || Integer.parseInt(opcao) == JOptionPane.CLOSED_OPTION){ 
                 JOptionPane.showMessageDialog(null, "Conexão cancelada!");
                 System.out.println("Conexão cancelada!");
-                s.close();
+                socket.close();
                 break;
             }
             
@@ -47,11 +45,11 @@ class Cliente{
            socketOutput.writeInt(operador);
 
             if(operador	== 0){
-                s.close();
+                socket.close();
                 System.out.println("Conexão encerrada");
                 break;
             }else if(operador > 7){
-                s.close();
+                socket.close();
                 System.out.println("Operação invalida! Encerrando conexão...");
                 break;
             }
@@ -67,7 +65,7 @@ class Cliente{
                 
                 case 5: case 6: case 7:
                     n1 = Double.parseDouble(JOptionPane.showInputDialog(null,"Informe um valor: "));
-                    socketOutput = new DataOutputStream(s.getOutputStream());
+                    socketOutput = new DataOutputStream(socket.getOutputStream());
                     socketOutput.writeDouble(n1);
                     break;
                 }

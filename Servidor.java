@@ -15,12 +15,12 @@ class Servidor {
         }
         while(true) {
             try {
-                System.out.println("Aguardando Conexão na porta: " + porta);
+                System.out.println("Aguardando Conexão na porta: " + porta + "...");
                 s1 = s.accept();
-                System.out.println("Cliente Conectado...");
+                InetAddress.getLocalHost();
+                System.out.println("Cliente Conectado..." + " IP: "+ InetAddress.getLocalHost().getHostAddress());
                 ServidorThread serviceThread = new ServidorThread(s1);
                 serviceThread.start();
-
             }
             catch(IOException e){
                 s.close();

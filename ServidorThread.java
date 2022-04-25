@@ -76,8 +76,10 @@ public class ServidorThread extends Thread {
                         socketOutput1.writeUTF("Cosseno de: " + n1 + " = " + cosseno);
                         break;
                     
-                    default:
-                        System.out.println("Operação invalida");
+                    case 0:
+                        System.out.println("Conexão encerrada!");
+                        s1.close();
+                        break;
                 }
 
             }while(opcao != 0);
