@@ -65,7 +65,6 @@ class Cliente{
                 
                 case 5: case 6: case 7:
                     n1 = Double.parseDouble(JOptionPane.showInputDialog(null,"Informe um valor: "));
-                    socketOutput = new DataOutputStream(socket.getOutputStream());
                     socketOutput.writeDouble(n1);
                     break;
                 }
