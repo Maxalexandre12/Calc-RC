@@ -19,7 +19,6 @@ class Servidor {
             try {
                 System.out.println("Aguardando Conexão na porta: " + porta + "...");
                 s1 = s.accept();
-                InetAddress.getLocalHost();
                 System.out.println("Cliente Conectado..." + " IP: "+ InetAddress.getLocalHost().getHostAddress());
                 ServidorThread serviceThread = new ServidorThread(s1);
                 serviceThread.start();
